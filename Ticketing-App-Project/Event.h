@@ -71,8 +71,9 @@ public:
 	static void setCompany(string company) {
 		Event::COMPANY = company;
 	}
-};
 
-string Event::COMPANY = "DSS";
+	friend ostream& operator<<(ostream& out, Event e);
+	friend istream& operator>>(istream& in, Event& e);
+};
 #endif Event.h
 

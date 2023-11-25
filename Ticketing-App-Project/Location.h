@@ -73,6 +73,8 @@ public:
 	}
 
 	Location& operator=(Location& l) {
+		if (this == &l)
+			return *this;
 		if (zones != nullptr) {
 			delete[] zones;
 		}
@@ -139,7 +141,7 @@ public:
 		this->noRows = noRows;
 	}
 
-	void setZones(char* zones) {
+	void setZones(const char* zones) {
 		if (zones != nullptr) {
 			if (this->zones != nullptr) {
 				delete[] this->zones;
@@ -160,5 +162,8 @@ public:
 			this->noSeats = noSeats;
 		}
 	}
+
+	friend ostream& operator<<(ostream& out, Location l);
+	friend istream& operator>>(istream& in, Location& l);
 };
 #endif Location.h

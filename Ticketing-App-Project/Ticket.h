@@ -44,5 +44,8 @@ public:
 	void setCategory(Category category) {
 		this->category = category;
 	}
+
+	friend ostream& operator<<(ostream& out, Ticket t);
+	friend istream& operator>>(istream& in, Ticket& t);
 };
 #endif Ticket.h
