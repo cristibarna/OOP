@@ -2,10 +2,9 @@
 
 ostream& operator<<(ostream& out, Location l) {
 	out << endl << "No seats: " << l.noSeats;
-	out << endl << "No rows: " << l.noRows;
-	out << endl << "Zones: ";
-	if (l.zones != nullptr) {
-		out << l.zones;
+	out << endl << "Venue name: ";
+	if (l.venueName != nullptr) {
+		out << l.venueName;
 	}
 	out << endl;
 	out << endl << "Seat number: ";
@@ -17,15 +16,13 @@ ostream& operator<<(ostream& out, Location l) {
 }
 
 istream& operator>>(istream& in, Location& l) {
-	cout << endl << "Zones: ";
+	cout << endl << "Venue Name: ";
 	string buffer;
 	in >> buffer;
 	l.setZones(buffer.c_str());
-	cout << endl << "No rows: ";
-	in >> l.noRows;
 	cout << endl << "No seats: ";
 	in >> l.noSeats;
-	if (l.noRows < 0 || l.noSeats < 0)
+	if (l.noSeats < 0)
 	{
 		cout << endl << "Invalid input. Number of rows and seats should be non-negative.";
 		return in;

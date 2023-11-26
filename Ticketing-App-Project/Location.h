@@ -7,15 +7,14 @@ using namespace std;
 class Location
 {
 	int noSeats = 0;
-	int noRows = 0;
-	char* zones = nullptr;
+	char* venueName = nullptr;
 	int* seatNumber = nullptr;
 
 public:
 	
 	~Location() {
-		if (zones != nullptr) {
-			delete[] zones;
+		if (venueName != nullptr) {
+			delete[] venueName;
 		}
 		if (seatNumber != nullptr) {
 			delete[] seatNumber;
@@ -26,15 +25,14 @@ public:
 
 	}
 
-	Location(int noSeats, int noRows, const char* zones, const int* seatNumber) {
+	Location(int noSeats, const char* venueName, const int* seatNumber) {
 		this->noSeats = noSeats;
-		this->noRows = noRows;
-		if (zones != nullptr) {
-			this->zones = new char[strlen(zones) + 1];
-			strcpy(this->zones, zones);
+		if (venueName != nullptr) {
+			this->venueName = new char[strlen(venueName) + 1];
+			strcpy(this->venueName, venueName);
 		}
 		else {
-			this->zones = nullptr;
+			this->venueName = nullptr;
 		}
 		if (noSeats > 0 && seatNumber != nullptr) {
 			this->noSeats = noSeats;
@@ -51,13 +49,12 @@ public:
 
 	Location(Location& l) {
 		this->noSeats = l.noSeats;
-		this->noRows = l.noRows;
-		if (l.zones != nullptr) {
-			this->zones = new char[strlen(l.zones) + 1];
-			strcpy(this->zones, l.zones);
+		if (l.venueName != nullptr) {
+			this->venueName = new char[strlen(l.venueName) + 1];
+			strcpy(this->venueName, l.venueName);
 		}
 		else {
-			this->zones = nullptr;
+			this->venueName = nullptr;
 		}
 		if (l.noSeats > 0 && l.seatNumber != nullptr) {
 			this->noSeats = l.noSeats;
@@ -75,20 +72,19 @@ public:
 	Location& operator=(Location& l) {
 		if (this == &l)
 			return *this;
-		if (zones != nullptr) {
-			delete[] zones;
+		if (venueName != nullptr) {
+			delete[] venueName;
 		}
 		if (seatNumber != nullptr) {
 			delete[] seatNumber;
 		}
 		this->noSeats = l.noSeats;
-		this->noRows = l.noRows;
-		if (l.zones != nullptr) {
-			this->zones = new char[strlen(l.zones) + 1];
-			strcpy(this->zones, l.zones);
+		if (l.venueName != nullptr) {
+			this->venueName = new char[strlen(l.venueName) + 1];
+			strcpy(this->venueName, l.venueName);
 		}
 		else {
-			this->zones = nullptr;
+			this->venueName = nullptr;
 		}
 		if (l.noSeats > 0 && l.seatNumber != nullptr) {
 			this->noSeats = l.noSeats;
@@ -107,15 +103,11 @@ public:
 		return this->noSeats;
 	}
 
-	int getNoRows() {
-		return this->noRows;
-	}
-
-	char* getZones() {
-		if (zones != nullptr)
+	char* getVenueName() {
+		if (venueName != nullptr)
 		{
-			char* copy = new char[strlen(zones) + 1];
-			strcpy(copy, zones);
+			char* copy = new char[strlen(venueName) + 1];
+			strcpy(copy, venueName);
 			return copy;
 		}
 		return nullptr;
@@ -137,17 +129,14 @@ public:
 		this->noSeats = noSeats;
 	}
 
-	void setNoRows(int noRows) {
-		this->noRows = noRows;
-	}
 
-	void setZones(const char* zones) {
-		if (zones != nullptr) {
-			if (this->zones != nullptr) {
-				delete[] this->zones;
+	void setVenueName(const char* venueName) {
+		if (venueName != nullptr) {
+			if (this->venueName != nullptr) {
+				delete[] this->venueName;
 			}
-			this->zones = new char[strlen(zones) + 1];
-			strcpy(this->zones, zones);
+			this->venueName = new char[strlen(venueName) + 1];
+			strcpy(this->venueName, venueName);
 		}
 	}
 
@@ -161,6 +150,44 @@ public:
 			}
 			this->noSeats = noSeats;
 		}
+	}
+
+	bool seatNumberExists(int seatNumber) {
+		if (seatNumber < 1 || seatNumber > noSeats) {
+			return false;
+		}
+		for (int i = 0; i < noSeats; i++) {
+			if (this->seatNumber[i] == seatNumber) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool isSeatAvailable(int seatNumber) const {
+		if (seatNumber >= 1 && seatNumber <= noSeats) {
+			if (this->seatNumber != nullptr) {
+				for (int i = 0; i < noSeats; i++) {
+					if (this->seatNumber[i] == seatNumber) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	Location operator++() {
+		this->noSeats++;
+		return *this;
+	}
+
+	Location operator--() {
+		this->noSeats--;
+		return *this;
 	}
 
 	friend ostream& operator<<(ostream& out, Location l);

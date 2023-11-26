@@ -2,7 +2,7 @@
 #ifndef Ticket.h
 #define _CRT_SECURE_NO_WARNINGS
 #include<iostream>;
-#include<string>;
+#include<string>
 using namespace std;
 enum Category {BRONZE, SILVER, GOLD};
 
@@ -43,6 +43,25 @@ public:
 
 	void setCategory(Category category) {
 		this->category = category;
+	}
+
+	bool operator==(const Ticket& t) const {
+		return (this->uniqueId == t.uniqueId) && (this->category == t.category);
+	}
+
+	bool operator!=(const Ticket& t) const {
+		return !(*this == t);
+	}
+
+	bool isTicketValid() const {
+		return (uniqueId != 0);
+	}
+
+	void promoteTicket() {
+		if (category == BRONZE)
+			category = SILVER;
+		else
+			category = GOLD;
 	}
 
 	friend ostream& operator<<(ostream& out, Ticket t);

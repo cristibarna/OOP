@@ -11,7 +11,7 @@ int main() {
     Event e1();
 
     int seatNumbers[]{ 1,2,3 };
-    Location l2(3, 2, "A, B, C", seatNumbers);
+    Location l2(3, "MetArena", seatNumbers);
     Ticket t2(5, GOLD);
     Event e2("RHCP TOUR", "12-12-2023", "20:00");
 

@@ -3,6 +3,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 #include<string>
+#include <chrono>
+#include <sstream>
 using namespace std;
 class Event
 {
@@ -72,8 +74,25 @@ public:
 		Event::COMPANY = company;
 	}
 
+	char operator[](size_t index) const {
+		if (index < name.length()) {
+			return name[index];
+		}
+		return '\0';
+	}
+
+	Event operator+(const Event& e) const {
+		Event result(name + e.name, date + e.date, time + e.time);
+		result.setCompany(COMPANY);
+		return result;
+	}
+
+	bool isEventValid() const{
+		return !name.empty() && !date.empty() && !time.empty();
+	}
+
 	friend ostream& operator<<(ostream& out, Event e);
 	friend istream& operator>>(istream& in, Event& e);
-};
+};        
 #endif Event.h
 
