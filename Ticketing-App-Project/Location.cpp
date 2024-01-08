@@ -19,7 +19,7 @@ istream& operator>>(istream& in, Location& l) {
 	cout << endl << "Venue Name: ";
 	string buffer;
 	in >> buffer;
-	l.setZones(buffer.c_str());
+	l.setVenueName(buffer.c_str());
 	cout << endl << "No seats: ";
 	in >> l.noSeats;
 	if (l.noSeats < 0)
